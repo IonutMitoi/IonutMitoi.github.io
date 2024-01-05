@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator Impozit 2024</title>
+    <!-- Adăugarea link-urilor către Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3>Calculator Impozit 2024</h3>
+            </div>
+            <div class="card-body">
+
+                <!-- Select pentru orase -->
+                <div class="form-group">
+                    <label for="selectOrase">Alege orașul:</label>
+                    <select id="selectOrase" class="form-control">
+                        <option value="București">București</option>
+                        <option value="Cluj-Napoca">Cluj-Napoca</option>
+                        <option value="Timișoara">Timișoara</option>
+                        <!-- Adăug alte orase aici... -->
+                    </select>
+                </div>
+
+                <!-- Input de tip număr pentru capacitatea cilindrică -->
+                <div class="form-group">
+                    <label for="inputCapacitate">Capacitate cilindrică (cmc):</label>
+                    <input type="number" id="inputCapacitate" class="form-control" placeholder="Introduceti capacitatea cilindrică">
+                </div>
+
+                <button onclick="calculeazaSiAfiseazaImpozit()" class="btn btn-primary">Calculează și Afișează Impozit</button>
+
+                <!-- Afișarea rezultatului -->
+                <div class="mt-4">
+                    <h5>Rezultat:</h5>
+                    <p id="rezultatImpozit"></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Adăugarea link-urilor către Bootstrap JS și jQuery (pentru funcționalități suplimentare) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function calculImpozit(capacitateCilindrica) {
+            let impozit;
+
+            if (capacitateCilindrica <= 200) {
+                impozit = 0;
+            } else if (capacitateCilindrica <= 1400) {
+                impozit = 56;
+            } else if (capacitateCilindrica <= 1650) {
+                impozit = 162;
+            } else {
+                const multiplicator = Math.ceil(capacitateCilindrica / 200);
+                impozit = multiplicator * 290;
+            }
+
+            return impozit;
+        }
+
+        function calculeazaSiAfiseazaImpozit() {
+            const oras = document.getElementById("selectOrase").value;
+            const capacitate = document.getElementById("inputCapacitate").value;
+
+            const impozit = calculImpozit(Number(capacitate));
+
+            // Afișarea rezultatului pe pagină
+            document.getElementById("rezultatImpozit").innerText = `Impozitul pentru o mașină în ${oras} cu capacitatea cilindrică de ${capacitate} cmc este: ${impozit} lei.`;
+        }
+    </script>
+
+</body>
+
+</html>
